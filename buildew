@@ -18,6 +18,8 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
+# sudo apt install nanobind-dev
+
 PYTHON=python$PYTHON_VERSION
 # CHECK PYTHON 3
 if command -v "$PYTHON" &>/dev/null; then

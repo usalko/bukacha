@@ -60,7 +60,7 @@ NB_MODULE(osrm_ext, m) {
     init_TileParameters(m);
 
     nb::class_<OSRM>(m, "OSRM", nb::is_final())
-        .def(nb::init<EngineConfig&>(), nb::raw_doc("Instantiates an instance of OSRM.\n\n"
+        .def(nb::init<EngineConfig&>(), nb::signature("Instantiates an instance of OSRM.\n\n"
             "Examples:\n\
                 >>> import osrm\n\
                 >>> py_osrm = osrm.OSRM('.tests/test_data/ch/monaco.osrm')\n\

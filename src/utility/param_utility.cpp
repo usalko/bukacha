@@ -48,7 +48,7 @@ void assign_routeparameters(RouteParameters* params,
                             const std::vector<RouteParameters::AnnotationsType>& annotations,
                             RouteParameters::GeometriesType geometries,
                             RouteParameters::OverviewType overview,
-                            const boost::optional<bool> continue_straight,
+                            const std::optional<bool> continue_straight,
                             std::vector<std::size_t> waypoints) 
 {
     params->steps = steps;
