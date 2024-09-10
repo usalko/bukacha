@@ -1,0 +1,22 @@
+# build files
+build
+__pycache__
+
+# test files
+/tests/data/ch
+/tests/data/corech
+/tests/data/mld
+/tests/data/monaco.osrm*
+
+# backup
+.github.old
+
+# local sensitive information
+.env
+
+# local python environment
+.venv
+.pip
+
+# IDE specific
+.vscode
