@@ -1,9 +1,13 @@
 #ifndef OSRM_NB_TRIPPARAMETER_H
 #define OSRM_NB_TRIPPARAMETER_H
 
+#include <nanobind/nanobind.h>
+
 #include "engine/api/trip_parameters.hpp"
 
-#include <nanobind/nanobind.h>
+NB_MAKE_OPAQUE(osrm::engine::api::TripParameters)
+NB_MAKE_OPAQUE(osrm::engine::api::TripParameters::DestinationType)
+NB_MAKE_OPAQUE(osrm::engine::api::TripParameters::SourceType)
 
 #include <unordered_map>
 

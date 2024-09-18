@@ -4,9 +4,6 @@
 #include "utility/osrm_utility.h"
 #include "utility/param_utility.h"
 
-#include <nanobind/nanobind.h>
-#include <nanobind/stl/string.h>
-
 namespace nb = nanobind;
 
 void init_EngineConfig(nb::module_& m) {

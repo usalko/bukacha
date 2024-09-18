@@ -2,9 +2,7 @@
 
 #include "engine/bearing.hpp"
 
-#include <nanobind/nanobind.h>
 #include <nanobind/operators.h>
-#include <nanobind/stl/pair.h>
 
 namespace nb = nanobind;
 

@@ -1,10 +1,11 @@
 #ifndef OSRM_NB_JSONCONTAINER_H
 #define OSRM_NB_JSONCONTAINER_H
 
-#include "util/json_container.hpp"
-#include <mapbox/variant.hpp>
-
 #include <nanobind/nanobind.h>
+
+#include "util/json_container.hpp"
+
+#include <mapbox/variant.hpp>
 
 #include <string>
 
@@ -68,7 +69,7 @@ struct ValueStringifyVisitor {
     std::string operator()(const json::Number& num) {
         return std::to_string(num.value);
     }
-    std::string operator()(const json::True& str) {
+    std::string operator()(const json::True&) {
         return "True";
     }
     std::string operator()(const json::False&) {
@@ -84,7 +85,7 @@ struct ValueStringifyVisitor {
             if(i != 0) {
                 output += ", ";
             }
-            output += mapbox::util::apply_visitor(*this, arr.values[i]);
+            output += ""; // FIXME: mapbox::util::apply_visitor(*this, arr.values[i]);
         }
         return output + "]";
     }
@@ -100,7 +101,7 @@ struct ValueStringifyVisitor {
                 output += ", ";
             }
             output += "'" + itr.first + "': ";
-            output += mapbox::util::apply_visitor(*this, itr.second);
+            output += ""; //FIXME: mapbox::util::apply_visitor(*this, itr.second);
             first = false;
         }
         return output + "}";

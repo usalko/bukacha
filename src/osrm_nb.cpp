@@ -8,9 +8,6 @@
 #include "osrm/tile_parameters.hpp"
 #include "osrm/trip_parameters.hpp"
 
-#include <nanobind/nanobind.h>
-#include <nanobind/stl/string.h>
-
 #include <stdexcept>
 
 #include "engineconfig_nb.h"
@@ -30,7 +27,8 @@
 
 namespace nb = nanobind;
 
-NB_MODULE(osrm_ext, m) {
+NB_MODULE(osrm_ext, m)
+{
     namespace api = osrm::engine::api;
     namespace json = osrm::util::json;
 
@@ -60,8 +58,8 @@ NB_MODULE(osrm_ext, m) {
     init_TileParameters(m);
 
     nb::class_<OSRM>(m, "OSRM", nb::is_final())
-        .def(nb::init<EngineConfig&>(), "Instantiates an instance of OSRM.\n\n"
-            "Examples:\n\
+        .def(nb::init<EngineConfig &>(), "Instantiates an instance of OSRM.\n\n"
+                                         "Examples:\n\
                 >>> import osrm\n\
                 >>> py_osrm = osrm.OSRM('.tests/test_data/ch/monaco.osrm')\n\
                 >>> py_osrm = osrm.OSRM(\n\
@@ -75,15 +73,15 @@ NB_MODULE(osrm_ext, m) {
                         max_alternatives = 1,\n\
                         default_radius = 'unlimited'\n\
                     )\n\n"
-            "Args:\n\
+                                         "Args:\n\
                 storage_config (string): File path string to storage config.\n\
                 EngineConfig (osrm.osrm_ext.EngineConfig): Keyword arguments from the EngineConfig class.\n\n"
-            "Returns:\n\
+                                         "Returns:\n\
                 __init__ (osrm.OSRM): A OSRM object.\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid OSRM EngineConfig parameters."
-            )
-        .def("__init__", [](OSRM* t, const std::string& storage_path) { 
+                                         "Raises:\n\
+                RuntimeError: On invalid OSRM EngineConfig parameters.")
+        .def("__init__", [](OSRM *t, const std::string &storage_path)
+             { 
             EngineConfig config;
             config.storage_config = osrm::storage::StorageConfig(storage_path);
 
@@ -91,9 +89,9 @@ NB_MODULE(osrm_ext, m) {
                 throw std::runtime_error("Required files are missing");
             }
 
-            new (t) OSRM(config);
-        })
-        .def("__init__", [](OSRM* t, const nb::kwargs& kwargs) {
+            new (t) OSRM(config); })
+        .def("__init__", [](OSRM *t, const nb::kwargs &kwargs)
+             {
             EngineConfig config;
             osrm_nb_util::populate_cfg_from_kwargs(kwargs, config);
 
@@ -101,9 +99,9 @@ NB_MODULE(osrm_ext, m) {
                 throw std::runtime_error("Config Parameters are Invalid");
             }
 
-            new (t) OSRM(config);
-        })
-        .def("Match", [](OSRM* t, const MatchParameters& params) {
+            new (t) OSRM(config); })
+        .def("Match", [](OSRM *t, const MatchParameters &params)
+            {
             if(!params.IsValid()) {
                 throw std::runtime_error("Invalid Match Parameters");
             }
@@ -112,18 +110,17 @@ NB_MODULE(osrm_ext, m) {
             osrm::engine::Status status = t->Match(params, result);
             osrm_nb_util::check_status(status, result);
 
-            return result;
-        }, "Matches/snaps given GPS points to the road network in the most plausible way.\n\n"
-            "Examples:\n\
+            return result; }, "Matches/snaps given GPS points to the road network in the most plausible way.\n\n"
+                  "Examples:\n\
                 >>> res = py_osrm.Match(match_params)\n\n"
-            "Args:\n\
+                  "Args:\n\
                 match_params (osrm.MatchParameters): MatchParameters Object.\n\n"
-            "Returns:\n\
+                  "Returns:\n\
                 (json): [A Match JSON Response](https://project-osrm.org/docs/v5.24.0/api/#match-service).\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid MatchParameters."
-            )
-        .def("Nearest", [](OSRM* t, const NearestParameters& params) {
+                  "Raises:\n\
+                RuntimeError: On invalid MatchParameters.")
+        .def("Nearest", [](OSRM *t, const NearestParameters &params)
+             {
             if(!params.IsValid()) {
                 throw std::runtime_error("Invalid Nearest Parameters");
             }
@@ -132,18 +129,17 @@ NB_MODULE(osrm_ext, m) {
             osrm::engine::Status status = t->Nearest(params, result);
             osrm_nb_util::check_status(status, result);
 
-            return result;
-        }, "Snaps a coordinate to the street network and returns the nearest matches.\n\n"
-            "Examples:\n\
+            return result; }, "Snaps a coordinate to the street network and returns the nearest matches.\n\n"
+                  "Examples:\n\
                 >>> res = py_osrm.Nearest(nearest_params)\n\n"
-            "Args:\n\
+                  "Args:\n\
                 nearest_params (osrm.NearestParameters): NearestParameters Object.\n\n"
-            "Returns:\n\
+                  "Returns:\n\
                 (json): [A Nearest JSON Response](https://project-osrm.org/docs/v5.24.0/api/#nearest-service).\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid NearestParameters."
-            )
-        .def("Route", [](OSRM* t, const RouteParameters& params) {
+                  "Raises:\n\
+                RuntimeError: On invalid NearestParameters.")
+        .def("Route", [](OSRM *t, const RouteParameters &params)
+             {
             if(!params.IsValid()) {
                 throw std::runtime_error("Invalid Route Parameters");
             }
@@ -152,18 +148,17 @@ NB_MODULE(osrm_ext, m) {
             osrm::engine::Status status = t->Route(params, result);
             osrm_nb_util::check_status(status, result);
 
-            return result;
-        }, "Finds the fastest route between coordinates in the supplied order.\n\n"
-            "Examples:\n\
+            return result; }, "Finds the fastest route between coordinates in the supplied order.\n\n"
+                  "Examples:\n\
                 >>> res = py_osrm.Route(route_params)\n\n"
-            "Args:\n\
+                  "Args:\n\
                 route_params (osrm.RouteParameters): RouteParameters Object.\n\n"
-            "Returns:\n\
+                  "Returns:\n\
                 (json): [A Route JSON Response](https://project-osrm.org/docs/v5.24.0/api/#route-service).\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid RouteParameters."
-            )
-        .def("Table", [](OSRM* t, const TableParameters& params) {
+                  "Raises:\n\
+                RuntimeError: On invalid RouteParameters.")
+        .def("Table", [](OSRM *t, const TableParameters &params)
+             {
             if(!params.IsValid()) {
                 throw std::runtime_error("Invalid Table Parameters");
             }
@@ -172,18 +167,17 @@ NB_MODULE(osrm_ext, m) {
             osrm::engine::Status status = t->Table(params, result);
             osrm_nb_util::check_status(status, result);
 
-            return result;
-        }, "Computes the duration of the fastest route between all pairs of supplied coordinates.\n\n"
-            "Examples:\n\
+            return result; }, "Computes the duration of the fastest route between all pairs of supplied coordinates.\n\n"
+                  "Examples:\n\
                 >>> res = py_osrm.Table(table_params)\n\n"
-            "Args:\n\
+                  "Args:\n\
                 table_params (osrm.TableParameters): TableParameters Object.\n\n"
-            "Returns:\n\
+                  "Returns:\n\
                 (json): [A Table JSON Response](https://project-osrm.org/docs/v5.24.0/api/#table-service).\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid TableParameters."
-            )
-        .def("Tile", [](OSRM* t, const TileParameters& params) {
+                  "Raises:\n\
+                RuntimeError: On invalid TableParameters.")
+        .def("Tile", [](OSRM *t, const TileParameters &params)
+             {
             if(!params.IsValid()) {
                 throw std::runtime_error("Invalid Tile Parameters");
             }
@@ -192,18 +186,17 @@ NB_MODULE(osrm_ext, m) {
             osrm::engine::Status status = t->Tile(params, result);
             nb::object obj = nb::bytes(result.c_str(), result.size());
 
-            return obj;
-        }, "Computes the duration of the fastest route between all pairs of supplied coordinates.\n\n"
-            "Examples:\n\
+            return obj; }, "Computes the duration of the fastest route between all pairs of supplied coordinates.\n\n"
+                  "Examples:\n\
                 >>> res = py_osrm.Tile(tile_params)\n\n"
-            "Args:\n\
+                  "Args:\n\
                 tile_params (osrm.TileParameters): TileParameters Object.\n\n"
-            "Returns:\n\
+                  "Returns:\n\
                 (json): [A Tile JSON Response](https://project-osrm.org/docs/v5.24.0/api/#tile-service).\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid TileParameters."
-            )
-        .def("Trip", [](OSRM* t, const TripParameters& params) {
+                  "Raises:\n\
+                RuntimeError: On invalid TileParameters.")
+        .def("Trip", [](OSRM *t, const TripParameters &params)
+             {
             if(!params.IsValid()) {
                 throw std::runtime_error("Invalid Trip Parameters");
             }
@@ -212,15 +205,13 @@ NB_MODULE(osrm_ext, m) {
             osrm::engine::Status status = t->Trip(params, result);
             osrm_nb_util::check_status(status, result);
 
-            return result;
-        }, "Solves the Traveling Salesman Problem using a greedy heuristic (farthest-insertion algorithm).\n\n"
-            "Examples:\n\
+            return result; }, "Solves the Traveling Salesman Problem using a greedy heuristic (farthest-insertion algorithm).\n\n"
+                  "Examples:\n\
                 >>> res = py_osrm.Trip(trip_params)\n\n"
-            "Args:\n\
+                  "Args:\n\
                 trip_params (osrm.TripParameters): TripParameters Object.\n\n"
-            "Returns:\n\
+                  "Returns:\n\
                 (json): [A Trip JSON Response](https://project-osrm.org/docs/v5.24.0/api/#trip-service).\n\n"
-            "Raises:\n\
-                RuntimeError: On invalid TripParameters."
-            );
+                  "Raises:\n\
+                RuntimeError: On invalid TripParameters.");
 }

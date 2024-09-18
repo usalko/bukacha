@@ -1,9 +1,9 @@
+#include <nanobind/nanobind.h>
+
 #include "types/approach_nb.h"
 
 #include "engine/approach.hpp"
 #include "utility/param_utility.h"
-
-#include <nanobind/nanobind.h>
 
 namespace nb = nanobind;
 

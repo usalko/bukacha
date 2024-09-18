@@ -7,8 +7,6 @@
 #include "engine/api/table_parameters.hpp"
 #include "engine/api/trip_parameters.hpp"
 
-#include <boost/optional.hpp>
-
 #include <unordered_map>
 #include <vector>
 #include <string>

@@ -1,9 +1,11 @@
 #ifndef OSRM_NB_ENGINECONFIG_H
 #define OSRM_NB_ENGINECONFIG_H
 
+#include <nanobind/nanobind.h>
+
 #include "osrm/engine_config.hpp"
 
-#include <nanobind/nanobind.h>
+NB_MAKE_OPAQUE(osrm::engine::EngineConfig::Algorithm)
 
 #include <unordered_map>
 

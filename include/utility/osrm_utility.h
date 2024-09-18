@@ -1,11 +1,11 @@
 #ifndef OSRM_NB_OSRM_UTIL_H
 #define OSRM_NB_OSRM_UTIL_H
 
+#include <nanobind/nanobind.h>
+
 #include "osrm/engine_config.hpp"
 #include "osrm/status.hpp"
 #include "util/json_container.hpp"
-
-#include <nanobind/nanobind.h>
 
 namespace osrm_nb_util {
 

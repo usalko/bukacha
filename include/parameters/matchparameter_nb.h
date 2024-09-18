@@ -1,9 +1,11 @@
 #ifndef OSRM_NB_MATCHPARAMETER_H
 #define OSRM_NB_MATCHPARAMETER_H
 
+#include <nanobind/nanobind.h>
+
 #include "engine/api/match_parameters.hpp"
 
-#include <nanobind/nanobind.h>
+NB_MAKE_OPAQUE(osrm::engine::api::MatchParameters::GapsType)
 
 #include <unordered_map>
 

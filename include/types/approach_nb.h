@@ -1,9 +1,11 @@
 #ifndef OSRM_NB_APPROACH_H
 #define OSRM_NB_APPROACH_H
 
+#include <nanobind/nanobind.h>
+
 #include "engine/approach.hpp"
 
-#include <nanobind/nanobind.h>
+NB_MAKE_OPAQUE(osrm::engine::Approach)
 
 #include <unordered_map>
 #include <string>

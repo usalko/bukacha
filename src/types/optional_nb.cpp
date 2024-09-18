@@ -2,12 +2,10 @@
 
 #include "engine/api/base_parameters.hpp"
 
-#include <nanobind/nanobind.h>
-#include <nanobind/stl/pair.h>
-
 namespace nb = nanobind;
 
-void init_Optional(nb::module_& m) {
+void init_Optional(nb::module_ &m)
+{
     using OptionalBool = std::optional<bool>;
     nb::class_<OptionalBool>(m, "OptionalBool")
         .def(nb::init<>())
@@ -31,8 +29,7 @@ void init_Optional(nb::module_& m) {
         .def(nb::init<>())
         .def(nb::init<osrm::engine::Bearing>())
         .def(nb::init_implicit<osrm::engine::Bearing>())
-        .def("__init__", [](OptionalBearing* t, std::pair<int16_t, int16_t> pair) {
-            new (t) OptionalBearing({pair.first, pair.second});
-         });
+        .def("__init__", [](OptionalBearing *t, std::pair<int16_t, int16_t> pair)
+             { new (t) OptionalBearing({pair.first, pair.second}); });
     nb::implicitly_convertible<std::pair<int16_t, int16_t>, OptionalBearing>();
 }
