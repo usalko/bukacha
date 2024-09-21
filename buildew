@@ -55,6 +55,7 @@ if [ ! -d .venv ]; then
     fi
     .venv/bin/python3 .pip/get-pip.py
     # .venv/bin/pip3 install -r requirements.txt
+    .venv/bin/pip3 install pytest
 fi
 
 if [ -f '.env' ]; then
@@ -84,7 +85,7 @@ fi
 
 if [ "$COMMAND" == "tests" ] || [ "$COMMAND" == "test" ]; then
     echo Run tests
-    .venv/bin/python -m unittests tests
+    .venv/bin/python -m pytest tests
 
 fi
 
