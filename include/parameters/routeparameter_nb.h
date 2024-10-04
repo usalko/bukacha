@@ -5,9 +5,8 @@
 
 #include "engine/api/route_parameters.hpp"
 
-NB_MAKE_OPAQUE(osrm::engine::api::RouteParameters::GeometriesType)
-NB_MAKE_OPAQUE(osrm::engine::api::RouteParameters::OverviewType)
-NB_MAKE_OPAQUE(osrm::engine::api::RouteParameters::AnnotationsType)
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/unordered_map.h>
 
 #include <unordered_map>
 

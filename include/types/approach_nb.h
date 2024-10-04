@@ -5,12 +5,15 @@
 
 #include "engine/approach.hpp"
 
-NB_MAKE_OPAQUE(osrm::engine::Approach)
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/unordered_map.h>
 
 #include <unordered_map>
 #include <string>
 
 using osrm::engine::Approach;
+
+namespace nb = nanobind;
 
 void init_Approach(nanobind::module_& m);
 

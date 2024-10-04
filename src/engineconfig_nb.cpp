@@ -6,24 +6,29 @@
 
 namespace nb = nanobind;
 
-void init_EngineConfig(nb::module_& m) {
+void init_EngineConfig(nb::module_ &m)
+{
     using osrm::engine::EngineConfig;
+
+    nb::enum_<EngineConfig::Algorithm>(m, "Algorithm", "enum-level docstring")
+        .value("CM", EngineConfig::Algorithm::CH, "CM")
+        .value("MLD", EngineConfig::Algorithm::MLD, "MLD")
+        .export_values();
 
     nb::class_<EngineConfig>(m, "EngineConfig", nb::is_final())
         .def(nb::init<>())
-        .def("__init__", [](EngineConfig* t, const nb::kwargs& kwargs) {
+        .def("__init__", [](EngineConfig *t, const nb::kwargs &kwargs)
+             {
             new (t) EngineConfig();
 
             osrm_nb_util::populate_cfg_from_kwargs(kwargs, *t);
 
             if(!t->IsValid()) {
                 throw std::runtime_error("Config Parameters are Invalid");
-            }
-        })
+            } })
         .def("IsValid", &EngineConfig::IsValid)
-        .def("SetStorageConfig", [](EngineConfig& self, const std::string& path) {
-            self.storage_config = osrm::storage::StorageConfig(path);
-        })
+        .def("SetStorageConfig", [](EngineConfig &self, const std::string &path)
+             { self.storage_config = osrm::storage::StorageConfig(path); })
         .def_rw("max_locations_trip", &EngineConfig::max_locations_trip)
         .def_rw("max_locations_viaroute", &EngineConfig::max_locations_viaroute)
         .def_rw("max_locations_distance_table", &EngineConfig::max_locations_distance_table)
@@ -39,13 +44,12 @@ void init_EngineConfig(nb::module_& m) {
         .def_rw("verbosity", &EngineConfig::verbosity)
         .def_rw("dataset_name", &EngineConfig::dataset_name);
 
-    nb::class_<EngineConfig::Algorithm>(m, "Algorithm")
-        .def("__init__", [](EngineConfig::Algorithm* t, const std::string& str) {
-            EngineConfig::Algorithm algorithm = osrm_nb_util::str_to_enum(str, "Algorithm", algorithm_map);
-            new (t) EngineConfig::Algorithm(algorithm);
-        })
-        .def("__repr__", [](EngineConfig::Algorithm type) {
-            return osrm_nb_util::enum_to_str(type, "Algorithm", algorithm_map);
-        });
-    nb::implicitly_convertible<std::string, EngineConfig::Algorithm>();
+    // nb::class_<EngineConfig::Algorithm>(m, "Algorithm")
+    //     .def("__init__", [](EngineConfig::Algorithm *t, const std::string &str)
+    //          {
+    //         EngineConfig::Algorithm algorithm = osrm_nb_util::str_to_enum(str, "Algorithm", algorithm_map);
+    //         new (t) EngineConfig::Algorithm(algorithm); })
+    //     .def("__repr__", [](EngineConfig::Algorithm type)
+    //          { return osrm_nb_util::enum_to_str(type, "Algorithm", algorithm_map); });
+    // nb::implicitly_convertible<std::string, EngineConfig::Algorithm>();
 }

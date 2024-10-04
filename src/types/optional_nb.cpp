@@ -2,34 +2,39 @@
 
 #include "engine/api/base_parameters.hpp"
 
+#include <nanobind/operators.h>
+#include <nanobind/stl/pair.h>
+#include <nanobind/stl/optional.h>
+
 namespace nb = nanobind;
 
 void init_Optional(nb::module_ &m)
 {
-    using OptionalBool = std::optional<bool>;
-    nb::class_<OptionalBool>(m, "OptionalBool")
-        .def(nb::init<>())
-        .def(nb::init<bool>())
-        .def(nb::init_implicit<bool>());
+    // using OptionalBool = std::optional<bool>;
 
-    using OptionalDouble = std::optional<double>;
-    nb::class_<OptionalDouble>(m, "OptionalDouble")
-        .def(nb::init<>())
-        .def(nb::init<double>())
-        .def(nb::init_implicit<double>());
+    // nb::class_<OptionalBool>(m, "OptionalBool")
+    //     .def(nb::init<>())
+    //     .def(nb::init<bool>())
+    //     .def(nb::init_implicit<bool>());
 
-    using OptionalApproach = std::optional<osrm::engine::Approach>;
-    nb::class_<OptionalApproach>(m, "OptionalApproach")
-        .def(nb::init<>())
-        .def(nb::init<osrm::engine::Approach>())
-        .def(nb::init_implicit<osrm::engine::Approach>());
+    // using OptionalDouble = std::optional<double>;
+    // nb::class_<OptionalDouble>(m, "OptionalDouble")
+    //     .def(nb::init<>())
+    //     .def(nb::init<double>())
+    //     .def(nb::init_implicit<double>());
 
-    using OptionalBearing = std::optional<osrm::engine::Bearing>;
-    nb::class_<OptionalBearing>(m, "OptionalBearing")
-        .def(nb::init<>())
-        .def(nb::init<osrm::engine::Bearing>())
-        .def(nb::init_implicit<osrm::engine::Bearing>())
-        .def("__init__", [](OptionalBearing *t, std::pair<int16_t, int16_t> pair)
-             { new (t) OptionalBearing({pair.first, pair.second}); });
-    nb::implicitly_convertible<std::pair<int16_t, int16_t>, OptionalBearing>();
+    // using OptionalApproach = std::optional<osrm::engine::Approach>;
+    // nb::class_<OptionalApproach>(m, "OptionalApproach")
+    //     .def(nb::init<>())
+    //     .def(nb::init<osrm::engine::Approach>())
+    //     .def(nb::init_implicit<osrm::engine::Approach>());
+
+    // using OptionalBearing = std::optional<osrm::engine::Bearing>;
+    // nb::class_<OptionalBearing>(m, "OptionalBearing")
+    //     .def(nb::init<>())
+    //     .def(nb::init<osrm::engine::Bearing>())
+    //     .def(nb::init_implicit<osrm::engine::Bearing>())
+    //     .def("__init__", [](OptionalBearing *t, std::pair<int16_t, int16_t> pair)
+    //          { new (t) OptionalBearing({pair.first, pair.second}); });
+    // nb::implicitly_convertible<std::pair<int16_t, int16_t>, OptionalBearing>();
 }

@@ -9,6 +9,16 @@ using namespace nb::literals;
 void init_BaseParameters(nb::module_& m) {
     using osrm::engine::api::BaseParameters;
 
+    nb::enum_<BaseParameters::SnappingType>(m, "SnappingType", "enum-level docstring")
+        .value("Default", BaseParameters::SnappingType::Default, "Default")
+        .value("Any", BaseParameters::SnappingType::Any, "Any")
+        .export_values();
+
+    nb::enum_<BaseParameters::OutputFormatType>(m, "OutputFormatType", "enum-level docstring")
+        .value("JSON", BaseParameters::OutputFormatType::JSON, "JSON")
+        .value("FLATBUFFERS", BaseParameters::OutputFormatType::FLATBUFFERS, "FLATBUFFERS")
+        .export_values();
+
     nb::class_<BaseParameters>(m, "BaseParameters")
         .def(nb::init<>(), "Instantiates an instance of BaseParameters.\n\n"
             "Note:\n\
@@ -49,23 +59,23 @@ void init_BaseParameters(nb::module_& m) {
         .def_rw("snapping", &BaseParameters::snapping)
         .def("IsValid", &BaseParameters::IsValid);
 
-    nb::class_<BaseParameters::SnappingType>(m, "SnappingType")
-        .def("__init__", [](BaseParameters::SnappingType* t, const std::string& str) {
-            BaseParameters::SnappingType snapping = osrm_nb_util::str_to_enum(str, "SnappingType", snapping_map);
-            new (t) BaseParameters::SnappingType(snapping);
-        }, "Instantiates a SnappingType based on provided String value.")
-        .def("__repr__", [](BaseParameters::SnappingType type) {
-            return osrm_nb_util::enum_to_str(type, "SnappingType", snapping_map);
-        }, "Return a String based on SnappingType value.");
-    nb::implicitly_convertible<std::string, BaseParameters::SnappingType>();
+    // nb::class_<BaseParameters::SnappingType>(m, "SnappingType")
+    //     .def("__init__", [](BaseParameters::SnappingType* t, const std::string& str) {
+    //         BaseParameters::SnappingType snapping = osrm_nb_util::str_to_enum(str, "SnappingType", snapping_map);
+    //         new (t) BaseParameters::SnappingType(snapping);
+    //     }, "Instantiates a SnappingType based on provided String value.")
+    //     .def("__repr__", [](BaseParameters::SnappingType type) {
+    //         return osrm_nb_util::enum_to_str(type, "SnappingType", snapping_map);
+    //     }, "Return a String based on SnappingType value.");
+    // nb::implicitly_convertible<std::string, BaseParameters::SnappingType>();
 
-    nb::class_<BaseParameters::OutputFormatType>(m, "OutputFormatType")
-        .def("__init__", [](BaseParameters::OutputFormatType* t, const std::string& str) {
-            BaseParameters::OutputFormatType output = osrm_nb_util::str_to_enum(str, "OutputFormatType", output_map);
-            new (t) BaseParameters::OutputFormatType(output);
-        }, "Instantiates a OutputFormatType based on provided String value.")
-        .def("__repr__", [](BaseParameters::OutputFormatType type) {
-            return osrm_nb_util::enum_to_str(type, "OutputFormatType", output_map);
-        }, "Return a String based on OutputFormatType value.");
-    nb::implicitly_convertible<std::string, BaseParameters::OutputFormatType>();
+    // nb::class_<BaseParameters::OutputFormatType>(m, "OutputFormatType")
+    //     .def("__init__", [](BaseParameters::OutputFormatType* t, const std::string& str) {
+    //         BaseParameters::OutputFormatType output = osrm_nb_util::str_to_enum(str, "OutputFormatType", output_map);
+    //         new (t) BaseParameters::OutputFormatType(output);
+    //     }, "Instantiates a OutputFormatType based on provided String value.")
+    //     .def("__repr__", [](BaseParameters::OutputFormatType type) {
+    //         return osrm_nb_util::enum_to_str(type, "OutputFormatType", output_map);
+    //     }, "Return a String based on OutputFormatType value.");
+    // nb::implicitly_convertible<std::string, BaseParameters::OutputFormatType>();
 }

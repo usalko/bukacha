@@ -73,6 +73,8 @@ target_include_directories(${EXT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/parameters
 )
 
+target_compile_options(${EXT_NAME} PRIVATE -g -O0)
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 find_package(LibOSRM)
 

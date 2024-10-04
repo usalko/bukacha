@@ -3,6 +3,10 @@
 #include "engine/api/nearest_parameters.hpp"
 #include "utility/param_utility.h"
 
+#include <nanobind/stl/vector.h>
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/optional.h>
+
 namespace nb = nanobind;
 using namespace nb::literals;
 
@@ -54,10 +58,10 @@ void init_NearestParameters(nb::module_& m) {
                 "hints"_a = std::vector<std::optional<osrm::engine::Hint>>(),
                 "radiuses"_a = std::vector<std::optional<double>>(),
                 "bearings"_a = std::vector<std::optional<osrm::engine::Bearing>>(),
-                "approaches"_a = std::vector<std::string*>(),
+                "approaches"_a = std::vector<std::char_traits<char>*>(),
                 "generate_hints"_a = true,
-                "exclude"_a = std::vector<std::string>(),
-                "snapping"_a = std::string()
+                "exclude"_a = std::vector<std::char_traits<char>>(),
+                "snapping"_a = BaseParameters::SnappingType::Default
             )
         .def_rw("number_of_results", &NearestParameters::number_of_results)
         .def("IsValid", &NearestParameters::IsValid);

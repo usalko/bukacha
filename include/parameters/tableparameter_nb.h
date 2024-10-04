@@ -5,9 +5,8 @@
 
 #include "engine/api/table_parameters.hpp"
 
-NB_MAKE_OPAQUE(osrm::engine::api::TableParameters)
-NB_MAKE_OPAQUE(osrm::engine::api::TableParameters::FallbackCoordinateType)
-NB_MAKE_OPAQUE(osrm::engine::api::TableParameters::AnnotationsType)
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/unordered_map.h>
 
 #include <unordered_map>
 

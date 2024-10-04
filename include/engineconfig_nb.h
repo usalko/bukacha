@@ -5,19 +5,19 @@
 
 #include "osrm/engine_config.hpp"
 
-NB_MAKE_OPAQUE(osrm::engine::EngineConfig::Algorithm)
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/unordered_map.h>
 
 #include <unordered_map>
 
 using osrm::engine::EngineConfig;
 
-void init_EngineConfig(nanobind::module_& m);
+void init_EngineConfig(nanobind::module_ &m);
 
-static const std::unordered_map<std::string, EngineConfig::Algorithm> algorithm_map {
-    { "CH", EngineConfig::Algorithm::CH },
-    { std::string(), EngineConfig::Algorithm::CH },
+static const std::unordered_map<std::string, EngineConfig::Algorithm> algorithm_map{
+    {"CH", EngineConfig::Algorithm::CH},
+    {std::string(), EngineConfig::Algorithm::CH},
     // { "CoreCH", EngineConfig::Algorithm::CoreCH },
-    { "MLD", EngineConfig::Algorithm::MLD }
-};
+    {"MLD", EngineConfig::Algorithm::MLD}};
 
-#endif //OSRM_NB_ENGINECONFIG_H
+#endif // OSRM_NB_ENGINECONFIG_H

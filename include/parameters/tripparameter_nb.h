@@ -5,26 +5,23 @@
 
 #include "engine/api/trip_parameters.hpp"
 
-NB_MAKE_OPAQUE(osrm::engine::api::TripParameters)
-NB_MAKE_OPAQUE(osrm::engine::api::TripParameters::DestinationType)
-NB_MAKE_OPAQUE(osrm::engine::api::TripParameters::SourceType)
+#include <nanobind/stl/string.h>
+#include <nanobind/stl/unordered_map.h>
 
 #include <unordered_map>
 
 using osrm::engine::api::TripParameters;
 
-void init_TripParameters(nanobind::module_& m);
+void init_TripParameters(nanobind::module_ &m);
 
-static const std::unordered_map<std::string, TripParameters::SourceType> source_map {
-    { "any", TripParameters::SourceType::Any },
-    { std::string(), TripParameters::SourceType::Any },
-    { "first", TripParameters::SourceType::First }
-};
+static const std::unordered_map<std::string, TripParameters::SourceType> source_map{
+    {"any", TripParameters::SourceType::Any},
+    {std::string(), TripParameters::SourceType::Any},
+    {"first", TripParameters::SourceType::First}};
 
-static const std::unordered_map<std::string, TripParameters::DestinationType> dest_map {
-    { "any", TripParameters::DestinationType::Any },
-    { std::string(), TripParameters::DestinationType::Any },
-    { "last", TripParameters::DestinationType::Last }
-};
+static const std::unordered_map<std::string, TripParameters::DestinationType> dest_map{
+    {"any", TripParameters::DestinationType::Any},
+    {std::string(), TripParameters::DestinationType::Any},
+    {"last", TripParameters::DestinationType::Last}};
 
-#endif //OSRM_NB_TRIPPARAMETER_H
+#endif // OSRM_NB_TRIPPARAMETER_H

@@ -55,7 +55,7 @@ if [ ! -d .venv ]; then
     fi
     .venv/bin/python3 .pip/get-pip.py
     # .venv/bin/pip3 install -r requirements.txt
-    .venv/bin/pip3 install pytest
+    .venv/bin/pip3 install pytest scikit-build-core nanobind
 fi
 
 if [ -f '.env' ]; then
@@ -86,11 +86,27 @@ fi
 if [ "$COMMAND" == "tests" ] || [ "$COMMAND" == "test" ]; then
     echo Run tests
     .venv/bin/python -m pytest tests
+fi
 
+if [ "$COMMAND" == "build" ]; then
+    echo Build package
+    # rm -fr build
+    # .venv/bin/pip uninstall osrm
+
+    # real	25m17,113s
+    # user	22m3,554s
+    # sys	2m19,980s
+    time .venv/bin/pip install -e . --no-build-isolation
+    # time .venv/bin/pip wheel .  
+fi
+
+if [ "$COMMAND" == "debug" ]; then
+    echo Debug python
+    gdb --args .venv/bin/python
 fi
 
 # =================================================================================================
 
-AVAILABLE_COMMANDS="tests clean"
+AVAILABLE_COMMANDS="build tests clean debug"
 echo ''
 [[ $AVAILABLE_COMMANDS =~ (^| )$COMMAND($| ) ]] && echo 'Ok' || (echo 'Unknown command: ' "$COMMAND" && echo 'Available commands are: ' "$AVAILABLE_COMMANDS")
