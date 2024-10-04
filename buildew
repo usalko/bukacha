@@ -102,7 +102,16 @@ fi
 
 if [ "$COMMAND" == "debug" ]; then
     echo Debug python
-    gdb --args .venv/bin/python
+
+    CD=$PWD
+    cd tests || exit
+    DEBUG_COMMAND_FILE=/tmp/gdb-commands
+cat >$DEBUG_COMMAND_FILE <<EOF
+catch throw
+run
+EOF
+    gdb -x $DEBUG_COMMAND_FILE --args ../.venv/bin/python 
+    cd "$CD" || exit
 fi
 
 # =================================================================================================
