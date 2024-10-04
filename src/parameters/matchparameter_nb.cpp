@@ -3,6 +3,10 @@
 #include "engine/api/match_parameters.hpp"
 #include "utility/param_utility.h"
 
+#include <nanobind/stl/vector.h>
+#include <nanobind/stl/optional.h>
+#include <nanobind/stl/string.h>
+
 namespace nb = nanobind;
 using namespace nb::literals;
 
