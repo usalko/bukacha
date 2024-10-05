@@ -32,9 +32,9 @@ void assign_val(T &to_assign, const std::pair<nb::handle, nb::handle> &val)
 namespace osrm_nb_util
 {
 
-    std::string string_value_to_string(osrm::util::json::Value& value)
+    std::string string_value_to_string(osrm::util::json::Value &value)
     {
-        if (const auto stringValue (std::get_if<osrm::util::json::String>(&value)); stringValue)
+        if (const auto stringValue(std::get_if<osrm::util::json::String>(&value)); stringValue)
         {
             return (*stringValue).value;
         }
@@ -150,6 +150,38 @@ namespace osrm_nb_util
 
             itr->second(kwarg);
         }
+    }
+
+    std::string format_config_parameters_error(std::string error_header, osrm::engine::EngineConfig engine_config)
+    {
+        std::stringstream ss;
+
+        ss << error_header << ": ";
+
+        const bool all_path_are_empty = engine_config.storage_config.GetPath("").empty();
+
+        const auto unlimited_or_more_than = [](const auto v, const auto limit)
+        { return v == -1 || v > limit; };
+
+        const bool limits_valid = unlimited_or_more_than(engine_config.max_locations_distance_table, 2) &&
+                                  unlimited_or_more_than(engine_config.max_locations_map_matching, 2) &&
+                                  unlimited_or_more_than(engine_config.max_radius_map_matching, 0) &&
+                                  unlimited_or_more_than(engine_config.max_locations_trip, 2) &&
+                                  unlimited_or_more_than(engine_config.max_locations_viaroute, 2) &&
+                                  unlimited_or_more_than(engine_config.max_results_nearest, 0) &&
+                                  unlimited_or_more_than(engine_config.default_radius, 0) && engine_config.max_alternatives >= 0;
+
+        if (!limits_valid)
+        {
+            ss << " limits invalid;";
+        }
+        if (!engine_config.storage_config.IsValid())
+        {
+            ss << " storage config is invalid;";
+        }
+
+        ss << std::endl;
+        return ss.str();
     }
 
 } // namespace osrm_nb_util

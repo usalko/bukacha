@@ -107,7 +107,7 @@ if [ "$COMMAND" == "debug" ]; then
     cd tests || exit
     DEBUG_COMMAND_FILE=/tmp/gdb-commands
 cat >$DEBUG_COMMAND_FILE <<EOF
-catch throw
+catch throw runtime_error
 run
 EOF
     gdb -x $DEBUG_COMMAND_FILE --args ../.venv/bin/python 

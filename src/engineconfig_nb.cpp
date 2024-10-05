@@ -24,7 +24,7 @@ void init_EngineConfig(nb::module_ &m)
             osrm_nb_util::populate_cfg_from_kwargs(kwargs, *t);
 
             if(!t->IsValid()) {
-                throw std::runtime_error("Config Parameters are Invalid");
+                throw std::runtime_error(osrm_nb_util::format_config_parameters_error("Config Parameters are Invalid", *t));
             } })
         .def("IsValid", &EngineConfig::IsValid)
         .def("SetStorageConfig", [](EngineConfig &self, const std::string &path)
