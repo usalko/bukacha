@@ -177,12 +177,12 @@ namespace osrm_nb_util
         }
         if (!engine_config.storage_config.IsValid())
         {
-            ss << " storage config is invalid:";
+            ss << " storage config is invalid " << std::endl;
             for (auto &fileName : engine_config.storage_config.GetMissingFiles())
             {
 
                 ss << " missing/broken file: " << engine_config.storage_config.base_path.string()
-                   << fileName;
+                   << fileName << std::endl;
             }
             ss << ";";
         }
