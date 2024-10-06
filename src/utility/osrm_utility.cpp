@@ -181,8 +181,7 @@ namespace osrm_nb_util
             for (auto &fileName : engine_config.storage_config.GetMissingFiles())
             {
 
-                ss << " missing/broken file: " << engine_config.storage_config.base_path.string()
-                   << fileName << std::endl;
+                ss << " missing/broken file: " << fileName << std::endl;
             }
             ss << ";";
         }
